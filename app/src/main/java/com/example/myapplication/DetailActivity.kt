@@ -26,3 +26,4 @@ class DetailActivity : AppCompatActivity() {
         binding.textView2.text = ingredients
     }
 }
+//bonjour
