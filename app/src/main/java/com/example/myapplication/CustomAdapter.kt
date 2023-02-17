@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.CellCustomBinding
 import com.example.myapplication.network.Plate
+import com.squareup.picasso.Picasso
 
 
 class CustomAdapter(val items: kotlin.collections.List<Plate>, val clickListener:(Plate)->(Unit)):RecyclerView.Adapter<CustomAdapter.CellViewHolder>() {
@@ -33,9 +34,17 @@ class CustomAdapter(val items: kotlin.collections.List<Plate>, val clickListener
         val plate = items[position]
         holder.textView.text= plate.name
         holder.priceTextView.text = plate.prices.first().price + " €"
+        Picasso.get().load(getThumbnail(plate)).into(holder.imageView)
         holder.root.setOnClickListener{
             Log.d("Click","click sur cell $position")
             clickListener(plate)
+        }
+    }
+    private fun getThumbnail(plate: Plate): String? {
+        return if (plate.images.isNotEmpty() && plate.images.firstOrNull()?.isNotEmpty() == true) {
+            plate.images.firstOrNull()
+        } else {
+            null
         }
     }
 }

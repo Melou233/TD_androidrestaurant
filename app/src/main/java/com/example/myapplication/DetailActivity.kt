@@ -4,6 +4,7 @@ import android.os.Binder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.iterator
+import com.example.androiderestanrant.PhotoAdapter
 import com.example.myapplication.databinding.ActivityDetailBinding
 import com.example.myapplication.network.Plate
 
@@ -22,8 +23,10 @@ class DetailActivity : AppCompatActivity() {
 
         plate = intent.getSerializableExtra(PLATE_EXTRA) as? Plate
         supportActionBar?.title = plate?.name
-        val ingredients = plate?.ingredients?.map {it.name}?.joinToString(System.getProperty("line.separator")) ?: ""
-        binding.textView2.text = ingredients
+        val ingredients = plate?.ingredients?.map {it.name}?.joinToString(System.getProperty("line.separator") ?: "")
+        binding.textView2.text= ingredients
+        plate?.let {
+            binding.viewPager2.adapter = PhotoAdapter(it.images, this)
+        }
     }
 }
-//bonjour
